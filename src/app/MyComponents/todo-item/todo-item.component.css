@@ -1,0 +1,12 @@
+.todo-label.completed {
+  text-decoration: line-through;
+  color: #6c757d;
+}
+
+.list-group-item {
+  transition: background-color .15s ease-in-out;
+}
+
+.list-group-item:hover {
+  background-color: rgba(13, 110, 253, 0.05);
+}

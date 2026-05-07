@@ -1,0 +1,47 @@
+<div class="card shadow-sm">
+  <div class="card-body">
+    <form class="row g-2 align-items-center mb-4" (ngSubmit)="addTodo()">
+      <div class="col-sm">
+        <label class="visually-hidden" for="newTodo">New task</label>
+        <input
+          id="newTodo"
+          class="form-control"
+          type="text"
+          placeholder="Add a new task"
+          [(ngModel)]="newTodo"
+          name="newTodo"
+          autocomplete="off"
+        />
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-primary w-100" type="submit" [disabled]="!newTodo.trim()">Add Task</button>
+      </div>
+    </form>
+
+    <div class="d-flex flex-wrap gap-2 mb-3">
+      <button type="button" class="btn btn-outline-secondary btn-sm" [class.active]="filter === 'all'" (click)="filter = 'all'">All</button>
+      <button type="button" class="btn btn-outline-secondary btn-sm" [class.active]="filter === 'active'" (click)="filter = 'active'">Active</button>
+      <button type="button" class="btn btn-outline-secondary btn-sm" [class.active]="filter === 'completed'" (click)="filter = 'completed'">Completed</button>
+      <button type="button" class="btn btn-outline-danger btn-sm ms-auto" (click)="clearCompleted()" [disabled]="completedCount === 0">Clear Completed</button>
+    </div>
+
+    <div class="mb-3 text-muted">
+      <span>{{ remaining }} active</span> · <span>{{ completedCount }} completed</span>
+    </div>
+
+    <div *ngIf="visibleTodos.length; else noTasks">
+      <div class="list-group">
+        <app-todo-item
+          *ngFor="let todo of visibleTodos"
+          [todo]="todo"
+          (toggle)="toggleTodo($event)"
+          (delete)="removeTodo($event)"
+        ></app-todo-item>
+      </div>
+    </div>
+
+    <ng-template #noTasks>
+      <div class="alert alert-info mb-0">No tasks yet. Add your first todo to get started.</div>
+    </ng-template>
+  </div>
+</div>
